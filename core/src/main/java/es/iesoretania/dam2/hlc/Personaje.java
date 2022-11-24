@@ -5,11 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -23,13 +19,12 @@ public class Personaje extends Actor {
 
     Animation<TextureRegion> animacionActual;
     Texture textura;
-    SpriteBatch spriteBatch;
     float stateTime;
     VerticalMovement verticalMovement;
     long tiempoSalto;
+    private static boolean gameOver=false;
 
-
-    public Personaje(TiledMap map) {
+    public Personaje() {
         textura = new Texture(Gdx.files.internal("mdlInflado.png"));
         TextureRegion[][] tmp = TextureRegion.split(textura, textura.getWidth() / FRAME_COLS, textura.getHeight() / FRAME_ROWS);
         TextureRegion[] frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
@@ -57,17 +52,20 @@ public class Personaje extends Actor {
     public void act(float delta) {
         super.act(delta);
 
-        if (TimeUtils.nanoTime() - tiempoSalto > 550000000) {
+        if (TimeUtils.nanoTime() - tiempoSalto > 300000000 && !getGameOver()) {
             verticalMovement = VerticalMovement.DOWN;
         }
 
         if (verticalMovement == VerticalMovement.UP) {
-            this.moveBy(100 * delta, 200 * delta);
+            this.moveBy(175 * delta, 200 * delta);
             stateTime += delta * 0.07f;
         }
         if (verticalMovement == VerticalMovement.DOWN) {
-            this.moveBy(100 * delta, -170 * delta);
+            this.moveBy(175 * delta, -200 * delta);
             stateTime += delta * 0.07f;
+        }
+        if(getGameOver()){
+            verticalMovement=VerticalMovement.NONE;
         }
     }
 
@@ -86,5 +84,12 @@ public class Personaje extends Actor {
                 verticalMovement = VerticalMovement.UP;
             return true;
         }
+    }
+    public boolean getGameOver() {
+        return gameOver;
+    }
+
+    public static void setGameOver(boolean gameOver) {
+        Personaje.gameOver = gameOver;
     }
 }
