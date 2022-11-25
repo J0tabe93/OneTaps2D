@@ -6,23 +6,29 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Personaje extends Actor {
+
     enum VerticalMovement {UP, NONE, DOWN}
-
     private static final int FRAME_COLS = 4, FRAME_ROWS = 1;
-
-
     Animation<TextureRegion> animacionActual;
     Texture textura;
     float stateTime;
     VerticalMovement verticalMovement;
     long tiempoSalto;
     private static boolean gameOver=false;
+
+    public boolean getGameOver() {
+        return gameOver;
+    }
+    public static void setGameOver(boolean b) {
+        gameOver=b;
+    }
 
     public Personaje() {
         textura = new Texture(Gdx.files.internal("mdlInflado.png"));
@@ -56,11 +62,11 @@ public class Personaje extends Actor {
             verticalMovement = VerticalMovement.DOWN;
         }
 
-        if (verticalMovement == VerticalMovement.UP) {
+        if (verticalMovement == VerticalMovement.UP && !getGameOver()) {
             this.moveBy(175 * delta, 175 * delta);
             stateTime += delta * 0.07f;
         }
-        if (verticalMovement == VerticalMovement.DOWN) {
+        if (verticalMovement == VerticalMovement.DOWN && !getGameOver()) {
             this.moveBy(175 * delta, -175 * delta);
             stateTime += delta * 0.07f;
         }
@@ -84,8 +90,5 @@ public class Personaje extends Actor {
                 verticalMovement = VerticalMovement.UP;
             return true;
         }
-    }
-    public boolean getGameOver() {
-        return gameOver;
     }
 }

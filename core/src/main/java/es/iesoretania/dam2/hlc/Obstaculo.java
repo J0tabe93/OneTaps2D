@@ -3,6 +3,7 @@ package es.iesoretania.dam2.hlc;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Obstaculo extends Actor {
@@ -35,5 +36,4 @@ public class Obstaculo extends Actor {
     public void act(float delta) {
         super.act(delta);
     }
-
 }

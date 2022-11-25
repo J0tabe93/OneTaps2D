@@ -8,7 +8,9 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -57,7 +59,6 @@ public class OneTaps2D extends ApplicationAdapter {
         alturaInicial2 = obstaculo2.getY();
     }
 
-
     @Override
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 1f);
@@ -85,11 +86,14 @@ public class OneTaps2D extends ApplicationAdapter {
         if (personaje.getY() > camera.viewportHeight - personaje.getHeight()) {
             personaje.setY(camera.viewportHeight - personaje.getHeight());
         }
-        if (personaje.getY() < 0) {
-            personaje.setY(0);
-            //Personaje.setGameOver(true);
-        }
-        offsetX += 175 * Gdx.graphics.getDeltaTime();
+        if (personaje.getY() < 0 ||
+                Intersector.overlaps(new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight()),
+                new Rectangle(obstaculo1.getX(), obstaculo1.getY(), obstaculo1.getWidth(), obstaculo1.getHeight())) ||
+                Intersector.overlaps(new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight()),
+                new Rectangle(obstaculo2.getX(), obstaculo2.getY(), obstaculo2.getWidth(), obstaculo2.getHeight()))) {
+
+            Personaje.setGameOver(true);
+        } else offsetX += 175 * Gdx.graphics.getDeltaTime();
 
         camera.position.x = camera.viewportWidth / 2 + offsetX;
         camera.update();
