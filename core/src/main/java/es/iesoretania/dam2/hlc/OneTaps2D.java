@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -87,10 +88,10 @@ public class OneTaps2D extends ApplicationAdapter {
             personaje.setY(camera.viewportHeight - personaje.getHeight());
         }
         if (personaje.getY() < 0 ||
-                Intersector.overlaps(new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight()),
-                new Rectangle(obstaculo1.getX(), obstaculo1.getY(), obstaculo1.getWidth(), obstaculo1.getHeight())) ||
-                Intersector.overlaps(new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight()),
-                new Rectangle(obstaculo2.getX(), obstaculo2.getY(), obstaculo2.getWidth(), obstaculo2.getHeight()))) {
+                Intersector.overlaps(new Circle(personaje.getX() + personaje.getWidth() / 2, personaje.getY() + personaje.getHeight() / 2, 11),
+                        new Rectangle(obstaculo1.getX(), obstaculo1.getY(), obstaculo1.getWidth(), obstaculo1.getHeight())) ||
+                Intersector.overlaps(new Circle(personaje.getX() + personaje.getWidth() / 2, personaje.getY() + personaje.getHeight() / 2, 11),
+                        new Rectangle(obstaculo2.getX(), obstaculo2.getY(), obstaculo2.getWidth(), obstaculo2.getHeight()))) {
 
             Personaje.setGameOver(true);
         } else offsetX += 175 * Gdx.graphics.getDeltaTime();
