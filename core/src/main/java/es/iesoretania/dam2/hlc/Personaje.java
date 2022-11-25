@@ -34,7 +34,7 @@ public class Personaje extends Actor {
                 frames[index1++] = tmp[i][j];
             }
         }
-        animacionActual = new Animation<>(0.03f, frames);
+        animacionActual = new Animation<>(0.02f, frames);
         stateTime = 0f;
         verticalMovement = VerticalMovement.DOWN;
         setSize((float) textura.getWidth() / FRAME_COLS, (float) textura.getHeight() / FRAME_ROWS);
@@ -57,11 +57,11 @@ public class Personaje extends Actor {
         }
 
         if (verticalMovement == VerticalMovement.UP) {
-            this.moveBy(175 * delta, 200 * delta);
+            this.moveBy(175 * delta, 175 * delta);
             stateTime += delta * 0.07f;
         }
         if (verticalMovement == VerticalMovement.DOWN) {
-            this.moveBy(175 * delta, -200 * delta);
+            this.moveBy(175 * delta, -175 * delta);
             stateTime += delta * 0.07f;
         }
         if(getGameOver()){
@@ -87,9 +87,5 @@ public class Personaje extends Actor {
     }
     public boolean getGameOver() {
         return gameOver;
-    }
-
-    public static void setGameOver(boolean gameOver) {
-        Personaje.gameOver = gameOver;
     }
 }

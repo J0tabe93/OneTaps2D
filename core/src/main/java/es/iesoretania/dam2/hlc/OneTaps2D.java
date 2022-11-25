@@ -14,9 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-/**
- * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
- */
 public class OneTaps2D extends ApplicationAdapter {
     Stage stage;
     TiledMap map;
@@ -29,6 +26,7 @@ public class OneTaps2D extends ApplicationAdapter {
     Actor obstaculo2;
     static boolean pase1 = true;
     int altura;
+    float alturaInicial1, alturaInicial2;
 
     @Override
     public void create() {
@@ -55,6 +53,8 @@ public class OneTaps2D extends ApplicationAdapter {
 
         Viewport viewport = new ScreenViewport(camera);
         stage.setViewport(viewport);
+        alturaInicial1 = obstaculo1.getY();
+        alturaInicial2 = obstaculo2.getY();
     }
 
 
@@ -67,27 +67,29 @@ public class OneTaps2D extends ApplicationAdapter {
             offsetX = 0;
             personaje.setPosition(100, personaje.getY());
             if (pase1) {
-                altura = MathUtils.random(1, 50);
+                altura = MathUtils.random(10, 120);
                 obstaculo1.setX(obstaculo1.getX() - camera.viewportWidth / 1.672f);
                 obstaculo2.setX(obstaculo2.getX() - camera.viewportWidth / 1.672f);
                 pase1 = false;
             } else {
-                altura = MathUtils.random(1, 50) * -1;
+                altura = MathUtils.random(10, 120) * -1;
                 obstaculo1.setX(obstaculo1.getX() - camera.viewportWidth / 1.672f);
                 obstaculo2.setX(obstaculo2.getX() - camera.viewportWidth / 1.672f);
                 pase1 = true;
             }
         }
         if (obstaculo1.getX() < personaje.getX() - 150) {
-            obstaculo1.setPosition(personaje.getX() + 700, obstaculo1.getY() - altura);
-            obstaculo2.setPosition(personaje.getX() + 700, obstaculo2.getY() - altura);
+            obstaculo1.setPosition(personaje.getX() + 700, alturaInicial1 - altura);
+            obstaculo2.setPosition(personaje.getX() + 700, alturaInicial2 - altura);
         }
         if (personaje.getY() > camera.viewportHeight - personaje.getHeight()) {
             personaje.setY(camera.viewportHeight - personaje.getHeight());
         }
         if (personaje.getY() < 0) {
-            Personaje.setGameOver(true);
-        } else offsetX += 175 * Gdx.graphics.getDeltaTime();
+            personaje.setY(0);
+            //Personaje.setGameOver(true);
+        }
+        offsetX += 175 * Gdx.graphics.getDeltaTime();
 
         camera.position.x = camera.viewportWidth / 2 + offsetX;
         camera.update();
