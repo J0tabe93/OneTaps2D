@@ -28,7 +28,7 @@ public class StartScreen extends ScreenAdapter {
     @Override
     public void show() {
         stage = new Stage();
-        Skin gameSkin = new Skin(Gdx.files.internal("shade/skin/uiskin.json"));
+        Skin gameSkin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
         texturaLogo = new Texture(Gdx.files.internal("ot2dlogo.png"));
         Image logo = new Image(texturaLogo);
         logo.setWidth(Gdx.graphics.getWidth() / 2f);
@@ -36,12 +36,10 @@ public class StartScreen extends ScreenAdapter {
         logo.setPosition(Gdx.graphics.getWidth() / 2f - logo.getWidth() / 2, Gdx.graphics.getHeight() - logo.getHeight() * 1.5f);
         logo.setColor(Color.WHITE);
 
-        TextButton tbTap = new TextButton("Tap", gameSkin);
-        tbTap.setWidth(Gdx.graphics.getWidth() / 6f);
-        tbTap.setHeight(35);
-        tbTap.setPosition(
-                Gdx.graphics.getWidth() / 2f - tbTap.getWidth() / 2,
-                Gdx.graphics.getHeight() / 2f - tbTap.getHeight() * 2
+        TextButton tbTap = new TextButton("Comenzar", gameSkin);
+        tbTap.setWidth(Gdx.graphics.getWidth() / 4f);
+        tbTap.setHeight(37);
+        tbTap.setPosition(Gdx.graphics.getWidth() / 2f - tbTap.getWidth() / 2, Gdx.graphics.getHeight() / 2f - tbTap.getHeight() * 3
         );
         tbTap.addListener(new InputListener() {
             @Override
@@ -58,7 +56,7 @@ public class StartScreen extends ScreenAdapter {
 
         TextButton tbSalir = new TextButton("Salir", gameSkin);
         tbSalir.setWidth(Gdx.graphics.getWidth() / 6f);
-        tbSalir.setHeight(35);
+        tbSalir.setHeight(37);
         tbSalir.setPosition(
                 Gdx.graphics.getWidth() / 2f - tbSalir.getWidth() / 2,
                 Gdx.graphics.getHeight() / 4f - tbSalir.getHeight()

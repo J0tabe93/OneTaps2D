@@ -37,9 +37,9 @@ public class TheEndScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
         int height = Gdx.graphics.getHeight();
-        game.font.draw(game.batch, "GAME OVER", Gdx.graphics.getWidth() / 3f, height * .8f);
-        game.font.draw(game.batch, Manager.getScoreTotal() + " puntos.", Gdx.graphics.getWidth() / 3f, height * .55f);
-        game.font.draw(game.batch, "Click para ir a la pantalla inicial.", Gdx.graphics.getWidth() / 3f, height * .3f);
+        game.font.draw(game.batch, "GAME OVER", Gdx.graphics.getWidth() / 2.45f, height * .8f);
+        game.font.draw(game.batch, Manager.getScoreTotal() + " puntos.", Gdx.graphics.getWidth() / 2.45f, height * .55f);
+        game.font.draw(game.batch, "Click para ir a la pantalla inicial.", Gdx.graphics.getWidth() / 3.1f, height * .3f);
         game.batch.end();
     }
 
