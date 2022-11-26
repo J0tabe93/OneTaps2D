@@ -15,11 +15,11 @@ public class Obstaculo extends Actor {
         if (tipo == 0) {
             texturaDown = new Texture(Gdx.files.internal("mastDown.png"));
             setSize(texturaDown.getWidth() / 1.5f, texturaDown.getHeight());
-            setPosition(790 - getWidth(), -135);
+            setPosition(790 - getWidth(), -120);
         } else {
             texturaUp = new Texture(Gdx.files.internal("mastUp.png"));
             setSize(texturaUp.getWidth() / 1.5f, texturaUp.getHeight());
-            setPosition(790 - getWidth(), 615 - getHeight());
+            setPosition(790 - getWidth(), 600 - getHeight());
         }
     }
 
