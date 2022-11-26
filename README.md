@@ -27,6 +27,6 @@ Useful Gradle tasks and flags:
 Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
 For example, `core:clean` removes `build` folder only from the `core` project.
 
-The sprites used for the character animations are a modification of the originals from the Game Boy Advance game "One Piece", they can be found at
+The sprites used for the character animations are a modification make for me of the originals from the Game Boy Advance game "One Piece", they can be found at
 www.spritedatabase.net whose characters, graphics, sounds, and other in-game materials are the property of their original creators and copyright holders, and 
 are provided there for private or non-commercial use. https://spritedatabase.net/file/4029
