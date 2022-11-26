@@ -17,6 +17,7 @@ public class Manager extends Actor {
     private int score;
     private static int scoreTotal;
     long aumentanPuntos;
+    boolean cambioPuntos = true;
 
     public Manager(Personaje personaje, Obstaculo obstaculo1, Obstaculo obstaculo2) {
         this.personaje = personaje;
@@ -37,7 +38,12 @@ public class Manager extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 && (!personaje.getGameOver() && !personaje.getPausa())) {
+        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 * 3f && personaje.verticalMovement != Personaje.VerticalMovement.NONE && cambioPuntos) {
+            score += 100;
+            aumentanPuntos = TimeUtils.nanoTime();
+            cambioPuntos = false;
+        }
+        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 * 5f && personaje.verticalMovement != Personaje.VerticalMovement.NONE && !cambioPuntos) {
             score += 100;
             aumentanPuntos = TimeUtils.nanoTime();
         }
@@ -47,7 +53,7 @@ public class Manager extends Actor {
                 Intersector.overlaps(new Circle(personaje.getX() + personaje.getWidth() / 2, personaje.getY() + personaje.getHeight() / 2, 20),
                         new Rectangle(obstaculo2.getX(), obstaculo2.getY(), obstaculo2.getWidth(), obstaculo2.getHeight()))) {
             scoreTotal = score;
-            Personaje.setGameOver(true);
+            personaje.verticalMovement = Personaje.VerticalMovement.NONE;
         }
     }
 

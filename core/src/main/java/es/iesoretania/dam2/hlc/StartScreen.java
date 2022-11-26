@@ -12,17 +12,23 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.TimeUtils;
 
 public class StartScreen extends ScreenAdapter {
     private final OneTaps2D game;
     private Stage stage;
     Texture texturaLogo;
+    Image logo;
     private final Sound menuSound = Gdx.audio.newSound(Gdx.files.internal("menu.mp3"));
     private final Sound gameSound = Gdx.audio.newSound(Gdx.files.internal("juego.mp3"));
+    long tiempoEscala;
+    private static boolean scale = true;
 
     public StartScreen(OneTaps2D game) {
         this.game = game;
         menuSound.loop();
+        tiempoEscala = TimeUtils.nanoTime();
     }
 
     @Override
@@ -30,18 +36,19 @@ public class StartScreen extends ScreenAdapter {
         stage = new Stage();
         Skin gameSkin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
         texturaLogo = new Texture(Gdx.files.internal("ot2dlogo.png"));
-        Image logo = new Image(texturaLogo);
+
+        logo = new Image(texturaLogo);
         logo.setWidth(Gdx.graphics.getWidth() / 2f);
         logo.setHeight(150);
         logo.setPosition(Gdx.graphics.getWidth() / 2f - logo.getWidth() / 2, Gdx.graphics.getHeight() - logo.getHeight() * 1.5f);
         logo.setColor(Color.WHITE);
+        logo.setOrigin(Align.center);
 
-        TextButton tbTap = new TextButton("Comenzar", gameSkin);
-        tbTap.setWidth(Gdx.graphics.getWidth() / 4f);
-        tbTap.setHeight(37);
-        tbTap.setPosition(Gdx.graphics.getWidth() / 2f - tbTap.getWidth() / 2, Gdx.graphics.getHeight() / 2f - tbTap.getHeight() * 3
-        );
-        tbTap.addListener(new InputListener() {
+        TextButton tbComenzar = new TextButton("Comenzar", gameSkin);
+        tbComenzar.setWidth(Gdx.graphics.getWidth() / 4f);
+        tbComenzar.setHeight(45);
+        tbComenzar.setPosition(Gdx.graphics.getWidth() / 2f - tbComenzar.getWidth() / 2, Gdx.graphics.getHeight() / 2f - tbComenzar.getHeight() * 2.5f);
+        tbComenzar.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 menuSound.dispose();
@@ -74,7 +81,7 @@ public class StartScreen extends ScreenAdapter {
         });
         Gdx.input.setInputProcessor(stage);
         stage.addActor(logo);
-        stage.addActor(tbTap);
+        stage.addActor(tbComenzar);
         stage.addActor(tbSalir);
     }
 
@@ -82,6 +89,20 @@ public class StartScreen extends ScreenAdapter {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if (scale) {
+            logo.scaleBy(0.02f * delta);
+            if (TimeUtils.nanoTime() - tiempoEscala > 500000000) {
+                tiempoEscala = TimeUtils.nanoTime();
+                scale = false;
+            }
+        } else {
+            logo.scaleBy(-0.02f * delta);
+            if (TimeUtils.nanoTime() - tiempoEscala > 500000000) {
+                tiempoEscala = TimeUtils.nanoTime();
+                scale = true;
+            }
+        }
         stage.act(delta);
         stage.draw();
     }

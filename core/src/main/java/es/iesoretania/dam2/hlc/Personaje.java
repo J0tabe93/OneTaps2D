@@ -18,8 +18,8 @@ public class Personaje extends Actor {
     enum VerticalMovement {UP, NONE, DOWN}
 
     private static final int FRAME_COLS = 4, FRAME_ROWS = 1;
-    Animation<TextureRegion> animacionActual;
-    Texture textura;
+    Animation<TextureRegion> animacionActual, animacionInflado, animacionDesinflar;
+    Texture textura1, textura2;
     float stateTime;
     VerticalMovement verticalMovement;
     long tiempoSalto;
@@ -41,25 +41,34 @@ public class Personaje extends Actor {
 
     private final Sound salto = Gdx.audio.newSound(Gdx.files.internal("salto.mp3"));
     private final Sound pausaSound = Gdx.audio.newSound(Gdx.files.internal("pausa.mp3"));
+    boolean reiniciarFrame = true;
 
     public Personaje() {
         if (font == null) {
             font = new BitmapFont(Gdx.files.internal("opfont.fnt"));
         }
-        textura = new Texture(Gdx.files.internal("mdlInflado.png"));
-        TextureRegion[][] tmp = TextureRegion.split(textura, textura.getWidth() / FRAME_COLS, textura.getHeight() / FRAME_ROWS);
-        TextureRegion[] frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        textura1 = new Texture(Gdx.files.internal("mdlInflado.png"));
+        textura2 = new Texture(Gdx.files.internal("mdlDesinflar.png"));
+        TextureRegion[][] tmp1 = TextureRegion.split(textura1, textura1.getWidth() / FRAME_COLS, textura1.getHeight() / FRAME_ROWS);
+        TextureRegion[][] tmp2 = TextureRegion.split(textura2, textura2.getWidth() / FRAME_COLS, textura2.getHeight() / FRAME_ROWS);
+        TextureRegion[] frames1 = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        TextureRegion[] frames2 = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index1 = 0;
+        int index2 = 0;
         for (int i = 0; i < FRAME_ROWS; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
-                frames[index1++] = tmp[i][j];
+                frames1[index1++] = tmp1[i][j];
+                frames2[index2++] = tmp2[i][j];
             }
         }
-        animacionActual = new Animation<>(0.02f, frames);
-        stateTime = 0f;
+        animacionInflado = new Animation<>(0.02f, frames1);
+        animacionDesinflar = new Animation<>(0.02f, frames2);
+        animacionActual = animacionInflado;
+        animacionActual.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        stateTime = 0;
         verticalMovement = VerticalMovement.DOWN;
-        setSize((float) textura.getWidth() / FRAME_COLS, (float) textura.getHeight() / FRAME_ROWS);
-        setPosition(100, 240);
+        setSize((float) textura1.getWidth() / FRAME_COLS, (float) textura1.getHeight() / FRAME_ROWS);
+        setPosition(100, 480 - getHeight());
     }
 
     @Override
@@ -70,30 +79,36 @@ public class Personaje extends Actor {
             font.draw(batch, "TO BE CONTINUED", getX() + 190, Gdx.graphics.getHeight() / 1.9f);
         }
         batch.draw(animacionActual.getKeyFrame(stateTime, true), getX(), getY());
-
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+        stateTime += delta * 0.015f;
         if (!gameOver && !pausa) {
-            processKeyboard();
-            if (TimeUtils.nanoTime() - tiempoSalto > 300000000) {
+            if (TimeUtils.nanoTime() - tiempoSalto > 300000000 && verticalMovement != VerticalMovement.NONE) {
                 verticalMovement = VerticalMovement.DOWN;
             }
-
             if (verticalMovement == VerticalMovement.UP) {
                 this.moveBy(180 * delta, 175 * delta);
-                stateTime += delta * 0.07f;
             }
             if (verticalMovement == VerticalMovement.DOWN) {
                 this.moveBy(180 * delta, -175 * delta);
-                stateTime += delta * 0.07f;
             }
-        } else {
-            processKeyboard();
-            verticalMovement = VerticalMovement.NONE;
         }
+        if (verticalMovement == VerticalMovement.NONE && !pausa) {
+            if (reiniciarFrame) {
+                stateTime = 0;
+                reiniciarFrame = false;
+            }
+            stateTime += delta * 0.015f;
+            animacionActual.setPlayMode(Animation.PlayMode.NORMAL);
+            animacionActual = animacionDesinflar;
+            if (animacionActual.isAnimationFinished(stateTime)) {
+                setGameOver(true);
+                stateTime = 0;
+            }
+        } else processKeyboard();
     }
 
     public void processKeyboard() {
@@ -110,6 +125,7 @@ public class Personaje extends Actor {
                 pausa = true;
             } else {
                 pausaSound.stop();
+                verticalMovement = VerticalMovement.DOWN;
                 pausa = false;
             }
         }

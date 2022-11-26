@@ -95,13 +95,15 @@ public class GameScreen extends ScreenAdapter {
         }
         if (!personaje.getGameOver() && !personaje.getPausa()) {
             gameSound.resume();
-            offsetX += 180 * delta;
         } else if (personaje.getGameOver() && !personaje.getPausa()) {
             gameSound.dispose();
             game.setScreen(new TheEndScreen(game));
         } else if (personaje.getPausa()) {
+            personaje.verticalMovement = Personaje.VerticalMovement.NONE;
             gameSound.pause();
         }
+        if (personaje.verticalMovement != Personaje.VerticalMovement.NONE)
+            offsetX += 180 * delta;
 
         camera.position.x = camera.viewportWidth / 2 + offsetX;
         camera.update();
