@@ -18,8 +18,9 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class StartScreen extends ScreenAdapter {
     private final OneTaps2D game;
     private Stage stage;
-    Texture texturaLogo;
-    Image logo;
+    Skin gameSkin;
+    Texture texturaLogo, texturaFondo;
+    Image logo, fondo;
     private final Sound menuSound = Gdx.audio.newSound(Gdx.files.internal("menu.mp3"));
     private final Sound gameSound = Gdx.audio.newSound(Gdx.files.internal("juego.mp3"));
     long tiempoEscala;
@@ -27,27 +28,34 @@ public class StartScreen extends ScreenAdapter {
 
     public StartScreen(OneTaps2D game) {
         this.game = game;
-        menuSound.loop();
+        menuSound.loop(0.5f);
         tiempoEscala = TimeUtils.nanoTime();
+        texturaLogo = new Texture(Gdx.files.internal("ot2dlogo.png"));
+        texturaFondo = new Texture(Gdx.files.internal("fondo.png"));
+        fondo = new Image(texturaFondo);
+        logo = new Image(texturaLogo);
+        gameSkin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+        Gdx.graphics.setResizable(false);
     }
 
     @Override
     public void show() {
         stage = new Stage();
-        Skin gameSkin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
-        texturaLogo = new Texture(Gdx.files.internal("ot2dlogo.png"));
 
-        logo = new Image(texturaLogo);
-        logo.setWidth(Gdx.graphics.getWidth() / 2f);
-        logo.setHeight(150);
-        logo.setPosition(Gdx.graphics.getWidth() / 2f - logo.getWidth() / 2, Gdx.graphics.getHeight() - logo.getHeight() * 1.5f);
-        logo.setColor(Color.WHITE);
+        fondo.setWidth(Gdx.graphics.getWidth());
+        fondo.setHeight(Gdx.graphics.getHeight());
+        fondo.setPosition(0, 0);
+
+        logo.setWidth(Gdx.graphics.getWidth() / 1.5f);
+        logo.setHeight(Gdx.graphics.getHeight() / 3.5f);
+        logo.setPosition(Gdx.graphics.getWidth() / 2f - logo.getWidth() / 2, Gdx.graphics.getHeight() - logo.getHeight() * 1.25f);
         logo.setOrigin(Align.center);
 
         TextButton tbComenzar = new TextButton("Comenzar", gameSkin);
         tbComenzar.setWidth(Gdx.graphics.getWidth() / 4f);
-        tbComenzar.setHeight(45);
-        tbComenzar.setPosition(Gdx.graphics.getWidth() / 2f - tbComenzar.getWidth() / 2, Gdx.graphics.getHeight() / 2f - tbComenzar.getHeight() * 2.5f);
+        tbComenzar.setHeight(Gdx.graphics.getHeight() / 10f);
+        tbComenzar.setPosition(Gdx.graphics.getWidth() / 2f - tbComenzar.getWidth() / 2, Gdx.graphics.getHeight() / 2f - tbComenzar.getHeight() * 3.5f);
+        tbComenzar.setColor(0,0.35f,0.65f,1);
         tbComenzar.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -63,11 +71,9 @@ public class StartScreen extends ScreenAdapter {
 
         TextButton tbSalir = new TextButton("Salir", gameSkin);
         tbSalir.setWidth(Gdx.graphics.getWidth() / 6f);
-        tbSalir.setHeight(37);
-        tbSalir.setPosition(
-                Gdx.graphics.getWidth() / 2f - tbSalir.getWidth() / 2,
-                Gdx.graphics.getHeight() / 4f - tbSalir.getHeight()
-        );
+        tbSalir.setHeight(Gdx.graphics.getHeight() / 10f);
+        tbSalir.setPosition(Gdx.graphics.getWidth() / 2f - tbSalir.getWidth() / 2, Gdx.graphics.getHeight() / 2f - tbSalir.getHeight()*4.5f);
+        tbSalir.setColor(0,0.35f,0.65f,1);
         tbSalir.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -80,6 +86,7 @@ public class StartScreen extends ScreenAdapter {
             }
         });
         Gdx.input.setInputProcessor(stage);
+        stage.addActor(fondo);
         stage.addActor(logo);
         stage.addActor(tbComenzar);
         stage.addActor(tbSalir);
@@ -91,14 +98,14 @@ public class StartScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (scale) {
-            logo.scaleBy(0.02f * delta);
-            if (TimeUtils.nanoTime() - tiempoEscala > 500000000) {
+            logo.scaleBy(0.03f * delta);
+            if (TimeUtils.nanoTime() - tiempoEscala > 600000000) {
                 tiempoEscala = TimeUtils.nanoTime();
                 scale = false;
             }
         } else {
-            logo.scaleBy(-0.02f * delta);
-            if (TimeUtils.nanoTime() - tiempoEscala > 500000000) {
+            logo.scaleBy(-0.03f * delta);
+            if (TimeUtils.nanoTime() - tiempoEscala > 600000000) {
                 tiempoEscala = TimeUtils.nanoTime();
                 scale = true;
             }

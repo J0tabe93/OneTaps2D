@@ -33,13 +33,12 @@ public class TheEndScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1f,0.8f,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
-        int height = Gdx.graphics.getHeight();
-        game.font.draw(game.batch, "GAME OVER", Gdx.graphics.getWidth() / 2.45f, height * .8f);
-        game.font.draw(game.batch, Manager.getScoreTotal() + " puntos.", Gdx.graphics.getWidth() / 2.45f, height * .55f);
-        game.font.draw(game.batch, "Click para ir a la pantalla inicial.", Gdx.graphics.getWidth() / 3.1f, height * .3f);
+        game.font.draw(game.batch, "GAME OVER", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .8f);
+        game.font.draw(game.batch, Manager.getScoreTotal() + " puntos.", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .55f);
+        game.font.draw(game.batch, "Click para ir a la pantalla inicial.", Gdx.graphics.getWidth() / 3.3f, Gdx.graphics.getHeight() * .3f);
         game.batch.end();
     }
 
