@@ -29,4 +29,7 @@ For example, `core:clean` removes `build` folder only from the `core` project.
 
 The sprites used for the character animations are a modification make for me of the originals from the Game Boy Advance game "One Piece", they can be found at
 www.spritedatabase.net whose characters, graphics, sounds, and other in-game materials are the property of their original creators and copyright holders, and 
-are provided there for private or non-commercial use. https://spritedatabase.net/file/4029
+are provided there for private or non-commercial use. https://spritedatabase.net/file/4029.
+
+The tilemap used as the moving background of GameScreen is created and modified using Tiled map editor and uses as a base background downloaded from 
+https://opengameart.org/content/ocean-background whose author is the user KnoblePersona and is under license Creative Commons Attribution "CC-BY 3.0".
