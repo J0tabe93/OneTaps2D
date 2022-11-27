@@ -1,4 +1,4 @@
-package es.iesoretania.dam2.hlc;
+package es.iesoretania.dam2.hlc.Game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

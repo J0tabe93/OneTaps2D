@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
-import es.iesoretania.dam2.hlc.OneTaps2D;
+import es.iesoretania.dam2.hlc.Game.OneTaps2D;
 
 public class StartScreen extends ScreenAdapter {
     private final OneTaps2D game;

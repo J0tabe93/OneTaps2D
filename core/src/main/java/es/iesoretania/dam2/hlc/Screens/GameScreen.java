@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import es.iesoretania.dam2.hlc.Actors.Manager;
 import es.iesoretania.dam2.hlc.Actors.Obstaculo;
 import es.iesoretania.dam2.hlc.Actors.Personaje;
-import es.iesoretania.dam2.hlc.OneTaps2D;
+import es.iesoretania.dam2.hlc.Game.OneTaps2D;
 import es.iesoretania.dam2.hlc.Enums.VerticalMovement;
 
 public class GameScreen extends ScreenAdapter {

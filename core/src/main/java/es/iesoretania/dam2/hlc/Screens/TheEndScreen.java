@@ -8,7 +8,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import es.iesoretania.dam2.hlc.Actors.Manager;
 import es.iesoretania.dam2.hlc.Actors.Personaje;
-import es.iesoretania.dam2.hlc.OneTaps2D;
+import es.iesoretania.dam2.hlc.Game.OneTaps2D;
 
 public class TheEndScreen extends ScreenAdapter {
     private final OneTaps2D game;
@@ -20,7 +20,14 @@ public class TheEndScreen extends ScreenAdapter {
     }
 
     @Override
-    public void show() {
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0.3f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        game.getBatch().begin();
+        game.getFont().draw(game.getBatch(), "GAME OVER", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .8f);
+        game.getFont().draw(game.getBatch(), Manager.getScoreTotal() + " puntos.", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .55f);
+        game.getFont().draw(game.getBatch(), "Click para ir a la pantalla inicial.", Gdx.graphics.getWidth() / 3.3f, Gdx.graphics.getHeight() * .3f);
+        game.getBatch().end();
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -32,17 +39,6 @@ public class TheEndScreen extends ScreenAdapter {
                 return super.touchDown(screenX, screenY, pointer, button);
             }
         });
-    }
-
-    @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0.3f,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.getBatch().begin();
-        game.getFont().draw(game.getBatch(), "GAME OVER", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .8f);
-        game.getFont().draw(game.getBatch(), Manager.getScoreTotal() + " puntos.", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .55f);
-        game.getFont().draw(game.getBatch(), "Click para ir a la pantalla inicial.", Gdx.graphics.getWidth() / 3.3f, Gdx.graphics.getHeight() * .3f);
-        game.getBatch().end();
     }
 
     @Override
