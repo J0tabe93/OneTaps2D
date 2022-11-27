@@ -1,4 +1,4 @@
-package es.iesoretania.dam2.hlc;
+package es.iesoretania.dam2.hlc.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -14,21 +14,26 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import es.iesoretania.dam2.hlc.Actors.Manager;
+import es.iesoretania.dam2.hlc.Actors.Obstaculo;
+import es.iesoretania.dam2.hlc.Actors.Personaje;
+import es.iesoretania.dam2.hlc.OneTaps2D;
+import es.iesoretania.dam2.hlc.Enums.VerticalMovement;
 
 public class GameScreen extends ScreenAdapter {
     private final OneTaps2D game;
-    Stage stage;
-    TiledMap map;
-    OrthographicCamera camera;
-    OrthogonalTiledMapRenderer mapRenderer;
+    private Stage stage;
+    private TiledMap map;
+    private OrthographicCamera camera;
+    private OrthogonalTiledMapRenderer mapRenderer;
     private int mapWidthInPixels;
     private float offsetX;
-    Personaje personaje;
-    Obstaculo obstaculo1;
-    Obstaculo obstaculo2;
-    static boolean pase1 = true;
-    int altura;
-    float alturaInicial1, alturaInicial2;
+    private Personaje personaje;
+    private Obstaculo obstaculo1;
+    private Obstaculo obstaculo2;
+    private static boolean pase1 = true;
+    private int altura;
+    private float alturaInicial1, alturaInicial2;
     private final Sound gameSound;
 
     public GameScreen(OneTaps2D game, Sound gameSound) {
@@ -99,10 +104,10 @@ public class GameScreen extends ScreenAdapter {
             gameSound.dispose();
             game.setScreen(new TheEndScreen(game));
         } else if (personaje.getPausa()) {
-            personaje.verticalMovement = Personaje.VerticalMovement.NONE;
+            personaje.setVerticalMovement(VerticalMovement.NONE);
             gameSound.pause();
         }
-        if (personaje.verticalMovement != Personaje.VerticalMovement.NONE)
+        if (personaje.getVerticalMovement() !=VerticalMovement.NONE)
             offsetX += 180 * delta;
 
         camera.position.x = camera.viewportWidth / 2 + offsetX;

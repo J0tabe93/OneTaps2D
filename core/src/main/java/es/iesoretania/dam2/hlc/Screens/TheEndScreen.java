@@ -1,4 +1,4 @@
-package es.iesoretania.dam2.hlc;
+package es.iesoretania.dam2.hlc.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,9 +6,12 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import es.iesoretania.dam2.hlc.Actors.Manager;
+import es.iesoretania.dam2.hlc.Actors.Personaje;
+import es.iesoretania.dam2.hlc.OneTaps2D;
 
 public class TheEndScreen extends ScreenAdapter {
-    OneTaps2D game;
+    private final OneTaps2D game;
     private final Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal("gameover.mp3"));
 
     public TheEndScreen(OneTaps2D game) {
@@ -33,13 +36,13 @@ public class TheEndScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1f,0.8f,0,1);
+        Gdx.gl.glClearColor(0,0,0.3f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.batch.begin();
-        game.font.draw(game.batch, "GAME OVER", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .8f);
-        game.font.draw(game.batch, Manager.getScoreTotal() + " puntos.", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .55f);
-        game.font.draw(game.batch, "Click para ir a la pantalla inicial.", Gdx.graphics.getWidth() / 3.3f, Gdx.graphics.getHeight() * .3f);
-        game.batch.end();
+        game.getBatch().begin();
+        game.getFont().draw(game.getBatch(), "GAME OVER", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .8f);
+        game.getFont().draw(game.getBatch(), Manager.getScoreTotal() + " puntos.", Gdx.graphics.getWidth() / 2.45f, Gdx.graphics.getHeight() * .55f);
+        game.getFont().draw(game.getBatch(), "Click para ir a la pantalla inicial.", Gdx.graphics.getWidth() / 3.3f, Gdx.graphics.getHeight() * .3f);
+        game.getBatch().end();
     }
 
     @Override

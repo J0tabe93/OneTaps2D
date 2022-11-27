@@ -1,9 +1,8 @@
-package es.iesoretania.dam2.hlc;
+package es.iesoretania.dam2.hlc.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,24 +13,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
+import es.iesoretania.dam2.hlc.OneTaps2D;
 
 public class StartScreen extends ScreenAdapter {
     private final OneTaps2D game;
     private Stage stage;
-    Skin gameSkin;
-    Texture texturaLogo, texturaFondo;
-    Image logo, fondo;
+    private final Skin gameSkin;
+    private final Image logo;
+    private final Image fondo;
     private final Sound menuSound = Gdx.audio.newSound(Gdx.files.internal("menu.mp3"));
     private final Sound gameSound = Gdx.audio.newSound(Gdx.files.internal("juego.mp3"));
-    long tiempoEscala;
+    private long tiempoEscala;
     private static boolean scale = true;
 
     public StartScreen(OneTaps2D game) {
         this.game = game;
         menuSound.loop(0.5f);
         tiempoEscala = TimeUtils.nanoTime();
-        texturaLogo = new Texture(Gdx.files.internal("ot2dlogo.png"));
-        texturaFondo = new Texture(Gdx.files.internal("fondo.png"));
+        Texture texturaLogo = new Texture(Gdx.files.internal("ot2dlogo.png"));
+        Texture texturaFondo = new Texture(Gdx.files.internal("fondo.png"));
         fondo = new Image(texturaFondo);
         logo = new Image(texturaLogo);
         gameSkin = new Skin(Gdx.files.internal("skin/comic-ui.json"));

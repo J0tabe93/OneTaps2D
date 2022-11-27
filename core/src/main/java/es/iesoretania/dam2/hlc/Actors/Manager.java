@@ -1,4 +1,4 @@
-package es.iesoretania.dam2.hlc;
+package es.iesoretania.dam2.hlc.Actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.TimeUtils;
+import es.iesoretania.dam2.hlc.Enums.VerticalMovement;
 
 public class Manager extends Actor {
     private static BitmapFont font;
@@ -16,8 +17,8 @@ public class Manager extends Actor {
     private final Obstaculo obstaculo2;
     private int score;
     private static int scoreTotal;
-    long aumentanPuntos;
-    boolean cambioPuntos = true;
+    private long aumentanPuntos;
+    private boolean cambioPuntos = true;
 
     public Manager(Personaje personaje, Obstaculo obstaculo1, Obstaculo obstaculo2) {
         this.personaje = personaje;
@@ -38,12 +39,12 @@ public class Manager extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 * 3f && personaje.verticalMovement != Personaje.VerticalMovement.NONE && cambioPuntos) {
+        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 * 3f && personaje.getVerticalMovement() != VerticalMovement.NONE && cambioPuntos) {
             score += 100;
             aumentanPuntos = TimeUtils.nanoTime();
             cambioPuntos = false;
         }
-        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 * 5f && personaje.verticalMovement != Personaje.VerticalMovement.NONE && !cambioPuntos) {
+        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 * 5f && personaje.getVerticalMovement() != VerticalMovement.NONE && !cambioPuntos) {
             score += 100;
             aumentanPuntos = TimeUtils.nanoTime();
         }
@@ -53,7 +54,7 @@ public class Manager extends Actor {
                 Intersector.overlaps(new Circle(personaje.getX() + personaje.getWidth() / 2, personaje.getY() + personaje.getHeight() / 2, 20),
                         new Rectangle(obstaculo2.getX(), obstaculo2.getY(), obstaculo2.getWidth(), obstaculo2.getHeight()))) {
             scoreTotal = score;
-            personaje.verticalMovement = Personaje.VerticalMovement.NONE;
+            personaje.setVerticalMovement(VerticalMovement.NONE);
         }
     }
 

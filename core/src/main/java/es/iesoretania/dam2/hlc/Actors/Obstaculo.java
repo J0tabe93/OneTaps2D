@@ -1,4 +1,4 @@
-package es.iesoretania.dam2.hlc;
+package es.iesoretania.dam2.hlc.Actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Obstaculo extends Actor {
-    Texture texturaDown;
-    Texture texturaUp;
-    int tipo;
+    private Texture texturaDown;
+    private Texture texturaUp;
+    private final int tipo;
 
     public Obstaculo(int tipo) {
         this.tipo = tipo;

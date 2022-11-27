@@ -4,18 +4,16 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import es.iesoretania.dam2.hlc.Screens.StartScreen;
 
 public class OneTaps2D extends Game {
-    BitmapFont font;
-    SpriteBatch batch;
-    ShapeRenderer shapeRenderer;
+    private BitmapFont font;
+    private SpriteBatch batch;
 
     @Override
     public void create() {
         font = new BitmapFont(Gdx.files.internal("opfont.fnt"));
         batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
         setScreen(new StartScreen(this));
     }
 
@@ -23,5 +21,13 @@ public class OneTaps2D extends Game {
     public void dispose() {
         font.dispose();
         batch.dispose();
+    }
+
+    public BitmapFont getFont() {
+        return font;
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
     }
 }
