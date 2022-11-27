@@ -18,7 +18,6 @@ public class Manager extends Actor {
     private int score;
     private static int scoreTotal;
     private long aumentanPuntos;
-    private boolean cambioPuntos = true;
 
     public Manager(Personaje personaje, Obstaculo obstaculo1, Obstaculo obstaculo2) {
         this.personaje = personaje;
@@ -39,12 +38,7 @@ public class Manager extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 * 3f && personaje.getVerticalMovement() != VerticalMovement.NONE && cambioPuntos) {
-            score += 100;
-            aumentanPuntos = TimeUtils.nanoTime();
-            cambioPuntos = false;
-        }
-        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 * 5f && personaje.getVerticalMovement() != VerticalMovement.NONE && !cambioPuntos) {
+        if (TimeUtils.nanoTime() - aumentanPuntos > 1000000000 && personaje.getVerticalMovement() != VerticalMovement.NONE) {
             score += 100;
             aumentanPuntos = TimeUtils.nanoTime();
         }
