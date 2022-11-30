@@ -45,4 +45,28 @@ public class TheEndScreen extends ScreenAdapter {
     public void hide() {
         Gdx.input.setInputProcessor(null);
     }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        Gdx.gl.glClearColor(0, 0, 0.3f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        game.getBatch().begin();
+        game.getFont().draw(game.getBatch(), "GAME OVER", width / 2.45f, height * .8f);
+        game.getFont().draw(game.getBatch(), Manager.getScoreTotal() + " puntos.", width / 2.45f, height * .55f);
+        game.getFont().draw(game.getBatch(), "Click para ir a la pantalla inicial.", width / 3.3f, height * .3f);
+        game.getBatch().end();
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                if (button == Input.Buttons.LEFT) {
+                    game.setScreen(new StartScreen(game));
+                    gameOverSound.dispose();
+                    Personaje.setGameOver(false);
+                }
+                return super.touchDown(screenX, screenY, pointer, button);
+            }
+        });
+        show();
+    }
 }

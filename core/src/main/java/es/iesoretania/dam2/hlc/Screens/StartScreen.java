@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import es.iesoretania.dam2.hlc.Game.OneTaps2D;
 
 public class StartScreen extends ScreenAdapter {
@@ -35,11 +38,6 @@ public class StartScreen extends ScreenAdapter {
         fondo = new Image(texturaFondo);
         logo = new Image(texturaLogo);
         gameSkin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
-        Gdx.graphics.setResizable(false);
-    }
-
-    @Override
-    public void show() {
         stage = new Stage();
 
         fondo.setWidth(Gdx.graphics.getWidth());
@@ -85,11 +83,18 @@ public class StartScreen extends ScreenAdapter {
                 return true;
             }
         });
-        Gdx.input.setInputProcessor(stage);
+        OrthographicCamera camera = new OrthographicCamera(800, 480);
+        Viewport viewport= new ScreenViewport(camera);
+        stage.setViewport(viewport);
         stage.addActor(fondo);
         stage.addActor(logo);
         stage.addActor(tbComenzar);
         stage.addActor(tbSalir);
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -112,6 +117,61 @@ public class StartScreen extends ScreenAdapter {
         }
         stage.act(delta);
         stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        stage = new Stage();
+
+        fondo.setWidth(width);
+        fondo.setHeight(height);
+        fondo.setPosition(0, 0);
+
+        logo.setWidth(width / 1.5f);
+        logo.setHeight(height / 3.5f);
+        logo.setPosition(width / 2f - logo.getWidth() / 2, height - logo.getHeight() * 1.25f);
+        logo.setOrigin(Align.center);
+
+        TextButton tbComenzar = new TextButton("Comenzar", gameSkin);
+        tbComenzar.setWidth(width / 4f);
+        tbComenzar.setHeight(height / 10f);
+        tbComenzar.setPosition(width / 2f - tbComenzar.getWidth() / 2, height / 2f - tbComenzar.getHeight() * 3.5f);
+        tbComenzar.setColor(0,0.35f,0.65f,1);
+        tbComenzar.addListener(new InputListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                menuSound.dispose();
+                game.setScreen(new GameScreen(game, gameSound));
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+
+        TextButton tbSalir = new TextButton("Salir", gameSkin);
+        tbSalir.setWidth(width / 6f);
+        tbSalir.setHeight(height / 10f);
+        tbSalir.setPosition(width / 2f - tbSalir.getWidth() / 2, height / 2f - tbSalir.getHeight()*4.5f);
+        tbSalir.setColor(0,0.35f,0.65f,1);
+        tbSalir.addListener(new InputListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.exit(0);
+            }
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(fondo);
+        stage.addActor(logo);
+        stage.addActor(tbComenzar);
+        stage.addActor(tbSalir);
+        show();
     }
 
     @Override

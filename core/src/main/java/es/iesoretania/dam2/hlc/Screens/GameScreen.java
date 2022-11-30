@@ -45,7 +45,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void stageBuild() {
         stage = new Stage();
-        camera = new OrthographicCamera();
+        camera = new OrthographicCamera(800,480);
         map = new TmxMapLoader().load("ocean.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map);
         Gdx.input.setInputProcessor(stage);
