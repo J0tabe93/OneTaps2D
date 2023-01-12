@@ -22,12 +22,4 @@ public class OneTaps2D extends Game {
         font.dispose();
         batch.dispose();
     }
-
-    public BitmapFont getFont() {
-        return font;
-    }
-
-    public SpriteBatch getBatch() {
-        return batch;
-    }
 }
