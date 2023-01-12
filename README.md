@@ -33,3 +33,9 @@ are provided there for private or non-commercial use. https://spritedatabase.net
 
 The tilemap used as the moving background of GameScreen is created and modified using Tiled map editor and uses as a base background downloaded from 
 https://opengameart.org/content/ocean-background whose author is the user KnoblePersona and is under license Creative Commons Attribution "CC-BY 3.0".
+
+The music on the StartScreen and the GameScreen is
+an audio snippet from several YouTube videos,
+and they are free of copyright. The End Screen's music
+is a home recording made by Alejandro Ruiz
+Casado.
